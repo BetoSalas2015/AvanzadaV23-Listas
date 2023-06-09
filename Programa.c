@@ -20,6 +20,9 @@ void insert(char dato);
 void imprimeLista();
 void insert1(char dato);
 void insertn(char dato, int pos);
+char remueve(void);
+char remueve1(void);
+char remueven(int pos);
 
 // Funciones
 
@@ -118,6 +121,76 @@ void imprimeLista()
 	putchar('\n');
 }
 
+char remueve(void)
+{
+	char dato;
+	nodo *recorre = raiz, *elimina = NULL;
+	if( raiz == NULL)			//  La lista está vacía?
+	{							//  Si
+		return '\0';			//  No hacemos nada.
+	}
+	if(recorre -> sig == NULL)	//  Es una lista de 1 solo nodo?
+	{							// Si
+		dato = recorre -> info;	// Preservamos el campo info
+		free(recorre);			// Liberamos la memoria reservada por malloc()
+		raiz = NULL;			// Se vuelve una lista vacía
+		return dato;			// Regresamos el dato que salio de la lista ligada
+	}
+	elimina = recorre ->sig;	//  Nos posicionamos delante de recorre
+	while( elimina ->sig != NULL )	// elimina esta posicionado en el último?
+	{								// no
+		recorre = recorre ->sig;	// recorre avanza al siguiente nodo
+		elimina = elimina ->sig;	// elimina avanza al siguiente nodo
+	}
+	recorre ->sig = NULL;	// El penúltimo se vuelve el último nodo de la lista
+	dato = elimina -> info;	// Preservamos el campo info
+	free(elimina);			// Liberamos la memoria reservada por malloc()
+	return dato;			// Regresamos el dato que salio de la lista ligada
+}
+
+char remueve1(void)
+{
+	char dato;
+	nodo *elimina = NULL;
+	if( raiz == NULL)			//  La lista está vacía?
+	{							//  Si
+		return '\0';			//  No hacemos nada.
+	}
+	elimina = raiz;				//  Apuntamos elimina al primer nodo
+	raiz = raiz ->sig;			//  raiz se apunta a lo que le segúia (otro nodo o NULL)
+	dato = elimina ->info;		//  Preservamos el campo info
+	free(elimina);				// Liberamos memoria reservada por malloc()
+	return dato;			// Regresamos el dato que salio de la lista ligada
+}
+
+char remueven(int pos)
+{
+	char dato;
+	nodo *recorre = raiz, *elimina = NULL;
+	if( raiz == NULL)			//  La lista está vacía?
+	{							//  Si
+		return '\0';			//  No hacemos nada.
+	}
+	if(recorre -> sig == NULL)	//  Es una lista de 1 solo nodo?
+	{							// Si
+		dato = recorre -> info;	// Preservamos el campo info
+		free(recorre);			// Liberamos la memoria reservada por malloc()
+		raiz = NULL;			// Se vuelve una lista vacía
+		return dato;			// Regresamos el dato que salio de la lista ligada
+	}
+	elimina = recorre ->sig;	//  Nos posicionamos delante de recorre
+	while( elimina ->sig != NULL )	// elimina esta posicionado en el último?
+	{								// no
+		recorre = recorre ->sig;	// recorre avanza al siguiente nodo
+		elimina = elimina ->sig;	// elimina avanza al siguiente nodo
+	}
+	recorre ->sig = NULL;	// El penúltimo se vuelve el último nodo de la lista
+	dato = elimina -> info;	// Preservamos el campo info
+	free(elimina);			// Liberamos la memoria reservada por malloc()
+	return dato;			// Regresamos el dato que salio de la lista ligada
+}
+
+
 
 int main()
 {
@@ -132,9 +205,13 @@ int main()
 
 	imprimeLista();
 
-	insertn('X', -6);
+	printf("Salio el dato %c de la lista.\n", remueve1() );
 
 	imprimeLista();
+
+	// imprimeLista();
+
+
 	pausa;
 	return 0;
 }
